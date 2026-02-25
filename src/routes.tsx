@@ -37,10 +37,26 @@ export const AppRoutes = () => {
       
           <Stack.Screen name="home" component={HomePage} />
 
-          <Stack.Group screenOptions={{
+          <Stack.Group 
+            screenOptions={{
               presentation: 'formSheet',
-              sheetCornerRadius: 24
+              sheetCornerRadius: 24,
+              contentStyle: {
+                height: '100%'
+              }
+            
             }}
+            screenLayout={({children}) => (
+              <SafeAreaView 
+                
+                edges={['left', 'right']}
+                style= {{
+                  flex: 1,
+                  padding: 16,
+                  backgroundColor: theme.colors.paper,
+                }}>
+                {children}
+              </SafeAreaView>)}
           >
 
             <Stack.Screen 
