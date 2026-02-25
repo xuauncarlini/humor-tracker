@@ -1,14 +1,32 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FirstComponent } from "./shared/components/FirstComponent";
+import { AppRoutes } from "./routes";
+import * as SplashScreen from 'expo-splash-screen';
+import { Inter_800ExtraBold, Inter_400Regular_Italic, Inter_400Regular, useFonts } from '@expo-google-fonts/inter'
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 
 export default function App() {
+
+  const [loaded, err] = useFonts({
+    extraBold: Inter_800ExtraBold, 
+    regularItalic: Inter_400Regular_Italic, 
+    regular: Inter_400Regular
+  });
+
+  useEffect(() => {
+    if (loaded || err) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, err]);
+
+  if (!loaded && err) {
+    return null;
+  }
+
   return (
-  <SafeAreaView>
-    <FirstComponent order={1} />
-    <FirstComponent order={2} />
-    <FirstComponent order={3} />
-  </SafeAreaView>
+    <AppRoutes />
   );
 }
 
