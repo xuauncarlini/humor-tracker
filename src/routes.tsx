@@ -9,7 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { theme } from "./shared/themes/Theme";
 
 type TScreenDefinitions = {
-  home: undefined;
+  home: {newName: string} | undefined;
   setusername: undefined;
   detail: { rate: number };
   
