@@ -10,6 +10,7 @@ import { BaseInput } from "../shared/components/BaseInput";
 import { theme } from "../shared/themes/Theme";
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ListItem } from "../shared/components/ListItem";
 
 
 
@@ -37,6 +38,30 @@ export const HomePage = () => {
         <View style={styles.emptyContentContainer }>
             <Text style={styles.emptyContentText}>Você ainda não {'\n'} registrou seu humor.</Text>
         </View>
+        
+        <View style={styles.listcontent}>
+            <ListItem 
+                datetime=""
+                rate={2}
+                description="Dia complexo"
+            />
+            <ListItem 
+                datetime=""
+                rate={3}
+                description="Dia complexo"
+            />
+            <ListItem 
+                datetime=""
+                rate={4}
+                description="Dia complexo"
+            />
+            <ListItem 
+                datetime=""
+                rate={5}
+                description="Dia complexo"
+            />
+        </View>
+
         <Footer>
             <View style={styles.footerContainer}>
                 <Text style={styles.footertitle}>
@@ -115,5 +140,12 @@ const styles = StyleSheet.create({
         gap: 8,
         paddingVertical: 8,
         paddingHorizontal: 16,
-    }
+    },
+    listcontent: {
+        flex: 1,
+        paddingHorizontal: 16,
+        gap:8,
+        paddingVertical: 16,
+
+    },
 });

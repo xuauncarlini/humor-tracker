@@ -5,6 +5,8 @@ import { BaseInput } from "../shared/components/BaseInput";
 import { Button } from "../shared/components/Button";
 import { theme } from "../shared/themes/Theme";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useState } from "react";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 
@@ -13,59 +15,78 @@ export const DetailPage = () => {
     const { params } = useRoute<TRouteProps<'detail'>>();
     const navigation = useNavigation<TNavigationScreenProps>();
 
+    const [date, setDate] = useState (new Date());
+    const [description, setDescription] = useState ('');
+    const [rate, setRate] = useState (params.rate);
+    const [showDateTimePicker, setShowDateTimePicker] = useState (false);
+
     return (
         <>
             <Text>Details {params.rate}</Text>
 
                 <View style={styles.footerContainer}>
                     <Text style={styles.footertitle}>
-                        'Como está o seu humor hoje?' : 'Qual é o seu nome?'
+                        'Como está o seu humor hoje?'
                     </Text>
                 
                     <View style={styles.footerStarContainer}>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => setRate(1)}>
                             <FontAwesome 
-                            name={params.rate >= 1 ? 'star' : "star-o"} 
+                            name={rate >= 1 ? 'star' : "star-o"} 
                             size={24} 
-                            color={params.rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder} />
+                            color={rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => setRate(1)}>
                             <FontAwesome 
-                            name={params.rate >= 2 ? 'star' : "star-o"} 
+                            name={rate >= 2 ? 'star' : "star-o"} 
                             size={24} 
-                            color={params.rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder} />
+                            color={rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => setRate(1)}>
                             <FontAwesome 
-                            name={params.rate >= 3 ? 'star' : "star-o"} 
+                            name={rate >= 3 ? 'star' : "star-o"} 
                             size={24} 
-                            color={params.rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder} />
+                            color={rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => setRate(1)}>
                             <FontAwesome 
-                            name={params.rate >= 4 ? 'star' : "star-o"} 
+                            name={rate >= 4 ? 'star' : "star-o"} 
                             size={24} 
-                            color={params.rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder} />
+                            color={rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => setRate(1)}>
                             <FontAwesome 
-                            name={params.rate >= 5 ? 'star' : "star-o"} 
+                            name={rate >= 5 ? 'star' : "star-o"} 
                             size={24} 
-                            color={params.rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder} />
+                            color={rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder} />
                         </TouchableOpacity>
                         
                     </View>
                     
-                    <BaseInput label='Data e hora'>
+                    <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>
                         <TextInput
+                            value={date.toLocaleString('pt-Br')}
+                            editable={false}
+                            pointerEvents="none"
+                            
                             style={styles.footerInput}
-                            placeholder='Escreva seu nome aqui...'
+                            placeholder='Selecione uma data e hora...'
                             placeholderTextColor={theme.colors.textPlaceholder}
                         />
                     </BaseInput>
+                    <DateTimePickerModal
+                        isVisible={showDateTimePicker}
+                        date={date}
+                        mode="datetime"
+                        onConfirm={(date) => {setShowDateTimePicker(false); setDate(date)}}
+                        onCancel={() => setShowDateTimePicker(false)}
+                    />
                     
                     <BaseInput label='Descreva mais sobre esse humor'>
                         <TextInput
+
+                            value={description}
+                            onChangeText={setDescription}
                             
                             style={{...styles.footerInput, ...styles.footerInputArea}}
                             placeholder='Escreva seu nome aqui...'
@@ -80,16 +101,19 @@ export const DetailPage = () => {
                 </View>
 
                 <View style={styles.actionsContainer}>
-                    <Button vairant="outlined" color={theme.colors.error}>
+                    {params.id &&(
+                        <Button vairant="outlined" color={theme.colors.error}>
                         <FontAwesome 
                             name="trash-o"
                             size={18} 
                             color={theme.colors.error} />
                     </Button>
+                    )}
                     <Button 
                         vairant="outlined"
                         grow
                         title="Cancelar"
+                        onPress={() => navigation.goBack()}
                     />
                     <Button
                         grow

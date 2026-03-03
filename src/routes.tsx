@@ -11,7 +11,7 @@ import { theme } from "./shared/themes/Theme";
 type TScreenDefinitions = {
   home: {newName: string} | undefined;
   setusername: undefined;
-  detail: { rate: number };
+  detail: { rate: number, id?: string};
   
 }
 
@@ -67,7 +67,7 @@ export const AppRoutes = () => {
             <Stack.Screen 
               name="setusername" 
               component={SetUserNamePage}
-              options={{sheetAllowedDetents: [0.4]}} 
+              options={{sheetAllowedDetents: [0.6]}} 
             />
           </Stack.Group>
     </Stack.Navigator>
